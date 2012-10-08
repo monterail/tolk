@@ -2,6 +2,7 @@ require 'tolk/application_controller'
 
 module Tolk
   class ApplicationController < ActionController::Base
+    unloadable
     helper :all
     protect_from_forgery
 
