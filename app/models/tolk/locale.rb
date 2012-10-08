@@ -60,6 +60,18 @@ module Tolk
         end
       end
 
+      def dump_primary_locale(to = self.locales_config_path)
+        locale = primary_locale
+        # backup primary locale
+        if File.exists?("#{to}/#{locale.name}.yml")
+          FileUtils.mv "#{to}/#{locale.name}.yml", "#{to}/#{Time.now.to_i}_#{locale.name}.yml.bak"
+        end
+        File.open("#{to}/#{locale.name}.yml", "w+") do |file|
+          data = locale.to_hash
+          data.respond_to?(:ya2yaml) ? file.write(data.ya2yaml(:syck_compatible => true)) : YAML.dump(locale.to_hash, file)
+        end
+      end
+
       def special_key_or_prefix?(prefix, key)
         self.special_prefixes.include?(prefix) || self.special_keys.include?(key)
       end
@@ -180,7 +192,7 @@ module Tolk
         end
       end
     end
-    
+
     private
 
 
