@@ -10,7 +10,10 @@
     #container
       #head
         %h1
-          %span.home= link_to "Tolk", root_path
+          %span.home
+            = link_to "OZ Admin", "/admin"
+            |
+            = link_to "Tolk", root_path
           - if @locale.present?
             %span.locale= link_to @locale.language_name, locale_path(@locale)
       = yield
