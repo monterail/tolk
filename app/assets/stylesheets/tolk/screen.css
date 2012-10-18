@@ -3,20 +3,20 @@ Defaults
 -------------------------------------------------*/
 
 acronym, abbr {
-  font-variant: small-caps; 
-  text-transform: lowercase; 
+  font-variant: small-caps;
+  text-transform: lowercase;
   font-weight: bold;
 }
 
-.center {text-align: center;}	
-.large {font-size: larger;}	
+.center {text-align: center;}
+.large {font-size: larger;}
 .small {font-size: smaller;}
 strong {font-weight: bold;}
 em {font-style: italic;}
 
-.clear {clear: both;}				 
-.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }		 
-.clearfix { display: inline-block; }		 
+.clear {clear: both;}
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix { display: inline-block; }
 .clearfix{ display: block; }
 
 a {color: #888;}
@@ -28,8 +28,8 @@ Layout
 
 body {
   font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
-  background: #e5e5e5; 
-  color: #333;   
+  background: #e5e5e5;
+  color: #333;
   margin: 0;
   padding: 0;
   font-size: 14px;
@@ -297,38 +297,21 @@ table.translations .phrase .carriage_return {
 Pagination
 -------------------------------------------------*/
 
-div.paginate {
-  margin: 15px auto 20px;
-  font-size: 12px;
-  color: #777;
+.pagination {
+  margin: 50px 30px;
 }
-
-div.paginate a,
-div.paginate span {
-  padding: 2px 6px;
-  text-decoration: none;
+.pagination ul {
+  text-align: center;
 }
-
-div.paginate a:hover,
-div.paginate span.current {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  background: #eee;
-  color: #333;
+.pagination ul li {
+  display: inline-block;
 }
-
-div.paginate .next_page,
-div.paginate .prev_page {
- margin: 0 15px;
- -webkit-border-radius: 5px;
- -moz-border-radius: 5px;
- border-radius: 5px;
- border: 1px solid #bbb;
- padding: 4px 8px;
+.pagination ul li a {
+  font-size: 14px;
+  padding: 1px 3px;
 }
-
-div.paginate .disabled {
-  color: #ccc;
-  border-color: #eee;
+.pagination ul li.active a {
+  padding: 1px 7px;
+  background-color: #5f6062;
+  color: white;
 }

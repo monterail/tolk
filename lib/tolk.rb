@@ -1,4 +1,4 @@
-require 'will_paginate'
+require 'kaminari'
 require 'ya2yaml'
 require 'tolk/config'
 require 'tolk/engine'

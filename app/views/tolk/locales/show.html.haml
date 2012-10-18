@@ -32,8 +32,7 @@
               %span.key{:title => phrase.key}= truncate(phrase.key, :length => 100)
       .table_submit
         %p= locale_form.submit "Save changes"
-    .paginate
-      = will_paginate @phrases
+    = paginate @phrases
   - else
     %p{:style => "text-align: left"} There aren't any missing or updated phrases that need translation.
     %p &nbsp;

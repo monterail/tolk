@@ -2,7 +2,7 @@ source "http://rubygems.org"
 
 gem "rails", "3.2.6"
 
-gem 'will_paginate'
+gem 'kaminari'
 gem "ya2yaml"
 
 group 'test' do

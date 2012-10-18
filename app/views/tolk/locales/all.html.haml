@@ -35,8 +35,7 @@
                 %span.key= phrase.key
       .table_submit
         %p= locale_form.submit "Save changes"
-      .paginate
-        = will_paginate @phrases
+      = paginate @phrases
   - else
     %p{:style => "text-align: left"} There aren't any completed translations for this locale.
     %p &nbsp;
