@@ -3,6 +3,11 @@ module Tolk
     self.table_name = "tolk_translations"
 
     scope :containing_text, lambda {|query| where("tolk_translations.text LIKE ?", "%#{query}%") }
+    scope :lookup, lambda {|locale, keys|
+      keys = Array(keys).map! { |key| key.to_s }
+      namespace = "#{keys.last}#{I18n::Backend::Flatten::FLATTEN_SEPARATOR}%"
+      includes(:phrase, :locale).where(["tolk_locales.name = ? AND (tolk_phrases.key IN (?) OR tolk_phrases.key LIKE ?)", locale, keys, namespace])
+    }
 
     serialize :text
     validates_presence_of :text, :if => proc {|r| r.primary.blank? && !r.explicit_nil }

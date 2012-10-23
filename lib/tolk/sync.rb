@@ -10,8 +10,9 @@ module Tolk
       end
 
       def load_translations
-        I18n.backend.send :init_translations unless I18n.backend.initialized? # force load
-        translations = flat_hash(I18n.backend.send(:translations)[primary_locale.name.to_sym])
+        simple_backend = I18n::Backend::Simple.new
+        simple_backend.send :init_translations unless simple_backend.initialized? # force load
+        translations = flat_hash(simple_backend.send(:translations)[primary_locale.name.to_sym])
         filter_out_i18n_keys(translations.merge(read_primary_locale_file))
       end
 
