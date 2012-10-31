@@ -135,7 +135,7 @@ module Tolk
 
       phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')
 
-      found_translations_ids = Tolk::Locale.primary_locale.translations.all(:conditions => ["tolk_translations.text LIKE ?", "%#{query}%"], :select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
+      found_translations_ids = Tolk::Locale.primary_locale.translations.all(:conditions => ["LOWER(tolk_translations.text) LIKE LOWER(?)", "%#{query}%"], :select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
       existing_ids = self.translations.all(:select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
       phrases = phrases.scoped(:conditions => ['tolk_phrases.id NOT IN (?) AND tolk_phrases.id IN(?)', existing_ids, found_translations_ids]) if existing_ids.present?
 

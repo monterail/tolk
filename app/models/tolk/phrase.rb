@@ -20,9 +20,6 @@ module Tolk
     end
 
     attr_accessor :translation
-
-    scope :containing_text, lambda { |query|
-      { :conditions => ["tolk_phrases.key LIKE ?", "%#{query}%"] }
-    }
+    scope :containing_text, lambda {|query| where("LOWER(tolk_phrases.key) LIKE LOWER(?)", "%#{query}%") }
   end
 end

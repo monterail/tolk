@@ -2,11 +2,11 @@ module Tolk
   class Translation < ActiveRecord::Base
     self.table_name = "tolk_translations"
 
-    scope :containing_text, lambda {|query| where("tolk_translations.text LIKE ?", "%#{query}%") }
+    scope :containing_text, lambda {|query| where("LOWER(tolk_translations.text) LIKE LOWER(?)", "%#{query}%") }
     scope :lookup, lambda {|locale, keys|
       keys = Array(keys).map! { |key| key.to_s }
       namespace = "#{keys.last}#{I18n::Backend::Flatten::FLATTEN_SEPARATOR}%"
-      includes(:phrase, :locale).where(["tolk_locales.name = ? AND (tolk_phrases.key IN (?) OR tolk_phrases.key LIKE ?)", locale, keys, namespace])
+      includes(:phrase, :locale).where(["tolk_locales.name = ? AND (tolk_phrases.key IN (?) OR LOWER(tolk_phrases.key) LIKE LOWER(?))", locale, keys, namespace])
     }
 
     serialize :text
