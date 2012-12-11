@@ -42,16 +42,14 @@ module Tolk
         secondary_locales = self.secondary_locales
 
         # Handle deleted phrases
-        translations.present? ? Tolk::Phrase.destroy_all(["tolk_phrases.key NOT IN (?)", translations.keys]) : Tolk::Phrase.destroy_all
-
-        phrases = Tolk::Phrase.all
+        # Tolk::Phrase.destroy_all(["tolk_phrases.key NOT IN (?)", translations.keys]) if translations.present?
 
         translations.each do |key, value|
           next if value.is_a?(Proc)
           # Create phrase and primary translation if missing
-          existing_phrase = phrases.detect {|p| p.key == key} || Tolk::Phrase.create!(:key => key)
+          existing_phrase = Tolk::Phrase.find_or_create_by_key(key)
           translation = existing_phrase.translations.primary || primary_locale.translations.build(:phrase_id => existing_phrase.id)
-          translation.text = value
+          translation.text = value unless translation.text.present?
 
           if translation.changed? && !translation.new_record?
             # Set the primary updated flag if the primary translation has changed and it is not a new record.
