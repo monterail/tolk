@@ -32,6 +32,11 @@ module Tolk
     attr_accessor :explicit_nil
     before_validation :set_explicit_nil
 
+    after_save do
+      Rails.logger.error "clean i18n cache store"
+      I18n.cache_store.clear
+    end
+
     def up_to_date?
       not out_of_date?
     end
