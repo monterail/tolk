@@ -33,8 +33,10 @@ module Tolk
     before_validation :set_explicit_nil
 
     after_save do
-      Rails.logger.error "clean i18n cache store"
-      I18n.cache_store.clear
+      cached_key = "i18n-#{[locale.name, phrase.key].join(I18n.default_separator)}".gsub(/\s/, "_")
+      Rails.logger.error "clean i18n cache for: #{cached_key}"
+      Rails.cache.delete cached_key
+      true
     end
 
     def up_to_date?
