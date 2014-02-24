@@ -27,7 +27,7 @@ module Tolk
     before_save :set_previous_text
 
     attr_accessor :primary
-    before_validation :fix_text_type, :unless => proc {|r| r.primary }
+    before_validation :fix_text_type
 
     attr_accessor :explicit_nil
     before_validation :set_explicit_nil
@@ -103,18 +103,13 @@ module Tolk
     end
 
     def fix_text_type
-      if primary_translation.present?
-        if self.text.is_a?(String) && !primary_translation.text.is_a?(String)
-          self.text = begin
-            YAML.load(self.text.strip)
-          rescue ArgumentError
-            nil
-          end
+      if self.text.is_a?(String) and self.text =~ /\A---/
+        self.text = begin
+          YAML.load(self.text.strip)
+        rescue ArgumentError
+          self.text
         end
-
-        self.text = nil if primary_translation.text.class != self.text.class
       end
-
       true
     end
 
